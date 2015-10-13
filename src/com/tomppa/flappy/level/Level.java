@@ -3,11 +3,16 @@ package com.tomppa.flappy.level;
 import com.tomppa.flappy.graphics.Shader;
 import com.tomppa.flappy.graphics.Texture;
 import com.tomppa.flappy.graphics.VertexArray;
+import com.tomppa.flappy.maths.Matrix4f;
+import com.tomppa.flappy.maths.Vector3f;
 
 public class Level {
 
 	private VertexArray background;
 	private Texture bgTexture;
+	
+	private int xScroll = 0;
+	private int map = 0;
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -33,9 +38,19 @@ public class Level {
 		bgTexture = new Texture("res/bg.jpeg");
 	}
 	
+	public void update() {
+		xScroll--;
+		if (-xScroll % 300 == 0) map++;
+	}
+	
 	public void render() {
 		bgTexture.bind();
 		Shader.BG.enable();
+		background.bind();
+		for (int i = map; i < map + 4; i++) {
+			Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));
+			background.draw();
+		}
 		background.render();
 		Shader.BG.disable();
 		bgTexture.unbind();

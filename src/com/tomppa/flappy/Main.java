@@ -70,10 +70,30 @@ public class Main implements Runnable {
 	
 	public void run() {
 		init();
+		
+		long lastTime = System.nanoTime();
+		double delta = 0.0;
+		double ns = 1000000000.0 / 60.0;
+		long timer = System.currentTimeMillis();
+		int updates = 0;
+		int frames = 0;
 		while (running) {
-			update();
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			if (delta >= 1.0) {
+				update();
+				updates++;
+				delta--;
+			}
 			render();
-			
+			frames++;
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				System.out.println(updates + " ups, " + frames + " fps");
+				updates = 0;
+				frames = 0;
+			}
 			if (glfwWindowShouldClose(window) == GL_TRUE) 
 				running = false;
 		}
@@ -81,6 +101,7 @@ public class Main implements Runnable {
 	
 	private void update() {
 		glfwPollEvents();
+		level.update();
 	}
 	
 	private void render() {
