@@ -8,6 +8,8 @@ import java.nio.ByteBuffer;
 
 import org.lwjgl.glfw.*;
 
+import com.tomppa.flappy.input.Input;
+
 public class Main implements Runnable {
 	
 	private int width = 1280;
@@ -39,6 +41,9 @@ public class Main implements Runnable {
 		
 		ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		glfwSetWindowPos(window, (GLFWvidmode.width(vidmode) - width) / 2, (GLFWvidmode.height(vidmode) - height) / 2);
+		
+		glfwSetKeyCallback(window, new Input());
+		
 		glfwMakeContextCurrent(window);
 		glfwShowWindow(window);
 	}
@@ -56,6 +61,9 @@ public class Main implements Runnable {
 	
 	private void update() {
 		glfwPollEvents();
+		if (Input.keys[GLFW_KEY_SPACE]) {
+			System.out.println("FLAP!");
+		}
 	}
 	
 	private void render() {
