@@ -15,6 +15,9 @@ public class Shader {
 	 * Point is to create class that calls OpenGL --> We don't have to write OpenGL code everytime we want to use it
 	 */
 	
+	public static final int VERTEX_ATTRIB = 0;
+	public static final int TCOORD_ATTRIB = 0;
+	
 	private final int ID;
 	private Map<String, Integer> locationCache = new HashMap<String, Integer>();
 	
