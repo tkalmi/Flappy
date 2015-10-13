@@ -1,11 +1,13 @@
 package com.tomppa.flappy.level;
 
 import com.tomppa.flappy.graphics.Shader;
+import com.tomppa.flappy.graphics.Texture;
 import com.tomppa.flappy.graphics.VertexArray;
 
 public class Level {
 
 	private VertexArray background;
+	private Texture bgTexture;
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -28,12 +30,15 @@ public class Level {
 		};
 		
 		background = new VertexArray(vertices, indices, tcs);
+		bgTexture = new Texture("res/bg.jpeg");
 	}
 	
 	public void render() {
+		bgTexture.bind();
 		Shader.BG.enable();
 		background.render();
 		Shader.BG.disable();
+		bgTexture.unbind();
 	}
 	
 }
