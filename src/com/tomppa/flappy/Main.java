@@ -23,6 +23,8 @@ public class Main implements Runnable {
 	private Thread thread;
 	private boolean running = false;
 	
+	private GLFWKeyCallback keyCallback; // ROGUE CODE!!!!
+	
 	private long window;
 	
 	private Level level;
@@ -49,7 +51,8 @@ public class Main implements Runnable {
 		ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		glfwSetWindowPos(window, (GLFWvidmode.width(vidmode) - width) / 2, (GLFWvidmode.height(vidmode) - height) / 2);
 		
-		glfwSetKeyCallback(window, new Input());
+		//glfwSetKeyCallback(window, new Input()); // T‰‰ oli alkuper‰ne!!!
+		glfwSetKeyCallback(window, keyCallback = new Input());// ROGUE CODE
 		
 		glfwMakeContextCurrent(window);
 		glfwShowWindow(window);
@@ -64,6 +67,9 @@ public class Main implements Runnable {
 		Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
 		Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);
 		Shader.BG.setUniform1i("tex", 1);
+		
+		Shader.BIRD.setUniformMat4f("pr_matrix", pr_matrix);
+		Shader.BIRD.setUniform1i("tex", 1);
 		
 		level = new Level();
 	}
@@ -97,10 +103,13 @@ public class Main implements Runnable {
 			if (glfwWindowShouldClose(window) == GL_TRUE) 
 				running = false;
 		}
+		keyCallback.release();// ROGUE CODE!!!
 	}
 	
 	private void update() {
 		glfwPollEvents();
+		if (Input.keys[GLFW_KEY_SPACE])
+			System.out.println("FLAP!");
 		level.update();
 	}
 	

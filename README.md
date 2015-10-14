@@ -10,3 +10,4 @@ Implemented level: Implemented Level (also into Main) + minor fixes to Shader, S
 Background renderable: Background image is visible when running the code
 Background scrolls some: Background scrolls (though not completely right)
 Background scroll fix 1: Makes scroll continuous
+Implemented bird with movement: Bird moves smoothly in 2D
