@@ -19,8 +19,11 @@ public class Level {
 	private Bird bird;
 	
 	private Pipe[] pipes = new Pipe[5 * 2];
-	private Random random = new Random();
 	private int index = 0;
+	
+	private Random random = new Random();
+	
+	private float OFFSET = 5.0f;
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -53,26 +56,30 @@ public class Level {
 	private void createPipes() {
 		Pipe.create();
 		for (int i = 0; i < 5 * 2; i += 2) {
-			pipes[i] = new Pipe(index * 3.0f, random.nextFloat() * 4.0f);
-			pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 11.0f);
+			pipes[i] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
+			pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 11.5f);
 			index += 2;
 		}
 	}
 	
 	private void updatePipes() {
-	//	pipes[];
+		pipes[index % 10] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
+		pipes[(index + 1) % 10] = new Pipe(pipes[index % 10].getX(), pipes[index % 10].getY() - 11.5f);
+		index += 2;
 	}
 	
 	public void update() {
 		xScroll--;
 		if (-xScroll % 335 == 0) map++;
+		if (-xScroll > 250 && -xScroll % 120 == 0)
+			updatePipes();
 		
 		bird.update();
 	}
 	
 	private void renderPipes() {
 		Shader.PIPE.enable();
-		Shader.PIPE.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(xScroll * 0.03f, 0.0f, 0.0f)));
+		Shader.PIPE.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(xScroll * 0.05f, 0.0f, 0.0f)));
 		Pipe.getTexture().bind();
 		Pipe.getMesh().bind();
 		

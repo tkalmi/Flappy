@@ -107,6 +107,9 @@ public class Main implements Runnable {
 				running = false;
 		}
 		keyCallback.release();// ROGUE CODE!!!
+		
+		glfwDestroyWindow(window);
+		glfwTerminate();
 	}
 	
 	private void update() {
