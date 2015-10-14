@@ -1,6 +1,5 @@
 package com.tomppa.flappy.level;
 
-import org.lwjgl.glfw.GLFW;
 import static org.lwjgl.glfw.GLFW.*;
 
 import com.tomppa.flappy.graphics.Shader;
@@ -55,7 +54,7 @@ public class Bird {
 		rot = -delta * 90.0f;
 	}
 	
-	private void fall() {
+	public void fall() {
 		delta = -0.15f;
 	}
 	
@@ -65,6 +64,14 @@ public class Bird {
 		texture.bind();
 		mesh.render();
 		Shader.BIRD.disable();
+	}
+
+	public float getY() {
+		return position.y;
+	}
+
+	public float getSize() {
+		return SIZE;
 	}
 	
 }

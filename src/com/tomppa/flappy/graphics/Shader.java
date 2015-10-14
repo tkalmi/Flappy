@@ -1,6 +1,5 @@
 package com.tomppa.flappy.graphics;
 
-import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class Shader {
 	public static final int VERTEX_ATTRIB = 0;
 	public static final int TCOORD_ATTRIB = 1;
 	
-	public static Shader BG, BIRD, PIPE; // BACKGROUND
+	public static Shader BG, BIRD, PIPE, FADE; // BACKGROUND
 	
 	private boolean enabled = false;
 	
@@ -35,6 +34,7 @@ public class Shader {
 		BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
 		BIRD = new Shader("shaders/bird.vert", "shaders/bird.frag");
 		PIPE = new Shader("shaders/pipe.vert", "shaders/pipe.frag");
+		FADE = new Shader("shaders/fade.vert", "shaders/fade.frag");
 	}
 	
 	public int getUniform(String name) {

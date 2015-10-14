@@ -18,3 +18,4 @@ Implemented pipes: Now there are pipes on the level
 Pipes fix 1: Top pipes are now rotated
 Bird fix 1: Bird now in front of pipes
 Implemented pipe loop: Pipes are now looping
+Implemented collision and fade: Bird now dies if it collides with pipes + fading

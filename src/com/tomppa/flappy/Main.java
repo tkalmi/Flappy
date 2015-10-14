@@ -61,6 +61,8 @@ public class Main implements Runnable {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glActiveTexture(GL_TEXTURE1);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		System.out.println("OpenGL: " + glGetString(GL_VERSION));
 		Shader.loadAll();
 		
@@ -70,7 +72,7 @@ public class Main implements Runnable {
 		
 		Shader.BIRD.setUniformMat4f("pr_matrix", pr_matrix);
 		Shader.BIRD.setUniform1i("tex", 1);
-		
+
 		Shader.PIPE.setUniformMat4f("pr_matrix", pr_matrix);
 		Shader.PIPE.setUniform1i("tex", 1);
 		

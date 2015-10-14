@@ -10,7 +10,7 @@ import com.tomppa.flappy.maths.Vector3f;
 
 public class Level {
 
-	private VertexArray background;
+	private VertexArray background, fade;
 	private Texture bgTexture;
 	
 	private int xScroll = 0;
@@ -20,10 +20,12 @@ public class Level {
 	
 	private Pipe[] pipes = new Pipe[5 * 2];
 	private int index = 0;
+	private float OFFSET = 5.0f;
+	private boolean control = true;
 	
 	private Random random = new Random();
 	
-	private float OFFSET = 5.0f;
+	private float time = 0.0f;
 	
 	public Level() {
 		float[] vertices = new float[] {
@@ -45,9 +47,9 @@ public class Level {
 			1, 1
 		};
 		
+		fade = new VertexArray(6);
 		background = new VertexArray(vertices, indices, tcs);
 		bgTexture = new Texture("res/bg.jpeg");
-		
 		bird = new Bird();
 		
 		createPipes();
@@ -69,12 +71,20 @@ public class Level {
 	}
 	
 	public void update() {
-		xScroll--;
-		if (-xScroll % 335 == 0) map++;
-		if (-xScroll > 250 && -xScroll % 120 == 0)
-			updatePipes();
+		if (control) {
+			xScroll--;
+			if (-xScroll % 335 == 0) map++;
+			if (-xScroll > 250 && -xScroll % 120 == 0)
+				updatePipes();
+		}
 		
 		bird.update();
+		
+		if (control && collision()) {
+			bird.fall();
+			control = false;
+		}
+		time += 0.01f;
 	}
 	
 	private void renderPipes() {
@@ -92,6 +102,32 @@ public class Level {
 		Pipe.getTexture().unbind();
 	}
 	
+	private boolean collision() {
+		for (int i = 0; i < 5 * 2; i++) {
+			float bx = -xScroll * 0.05f;
+			float by = bird.getY();
+			float px = pipes[i].getX();
+			float py = pipes[i].getY();
+
+			float bx0 = bx - bird.getSize() / 2.0f;
+			float bx1 = bx + bird.getSize() / 2.0f;
+			float by0 = by - bird.getSize() / 2.0f;
+			float by1 = by + bird.getSize() / 2.0f;
+			
+			float px0 = px;
+			float px1 = px + Pipe.getWidth();
+			float py0 = py;
+			float py1 = py + Pipe.getHeight();
+			
+			if (bx1 > px0 && bx0 < px1) {
+				if (by1 > py0 && by0 < py1) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public void render() {
 		bgTexture.bind();
 		Shader.BG.enable();
@@ -106,6 +142,11 @@ public class Level {
 
 		renderPipes();
 		bird.render();
+		
+		Shader.FADE.enable();
+		Shader.FADE.setUniform1f("time", time);
+		fade.render();
+		Shader.FADE.disable();
 	}
 	
 }
