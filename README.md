@@ -14,3 +14,4 @@ Implemented bird with movement: Bird moves smoothly in 2D
 Implemented flappiness: Bird jumps up when space is pressed, otherwise falls down.
 Removed white box from bird: No more whites around bird
 Added tilting to bird: Bird is tilted towards where it is headed
+Implemented pipes: Now there are pipes on the level
