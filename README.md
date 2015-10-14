@@ -12,3 +12,4 @@ Background scrolls some: Background scrolls (though not completely right)
 Background scroll fix 1: Makes scroll continuous
 Implemented bird with movement: Bird moves smoothly in 2D
 Implemented flappiness: Bird jumps up when space is pressed, otherwise falls down.
+Removed white box from bird: No more whites around bird
