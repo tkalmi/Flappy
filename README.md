@@ -15,3 +15,4 @@ Implemented flappiness: Bird jumps up when space is pressed, otherwise falls dow
 Removed white box from bird: No more whites around bird
 Added tilting to bird: Bird is tilted towards where it is headed
 Implemented pipes: Now there are pipes on the level
+Pipes fix 1: Top pipes are now rotated
