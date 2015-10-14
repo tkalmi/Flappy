@@ -59,14 +59,14 @@ public class Level {
 		Pipe.create();
 		for (int i = 0; i < 5 * 2; i += 2) {
 			pipes[i] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
-			pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 11.5f);
+			pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 12.5f);
 			index += 2;
 		}
 	}
 	
 	private void updatePipes() {
 		pipes[index % 10] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
-		pipes[(index + 1) % 10] = new Pipe(pipes[index % 10].getX(), pipes[index % 10].getY() - 11.5f);
+		pipes[(index + 1) % 10] = new Pipe(pipes[index % 10].getX(), pipes[index % 10].getY() - 12.5f);
 		index += 2;
 	}
 	
@@ -89,6 +89,7 @@ public class Level {
 	
 	private void renderPipes() {
 		Shader.PIPE.enable();
+		Shader.PIPE.setUniform2f("bird", 0.0f, bird.getY());
 		Shader.PIPE.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(xScroll * 0.05f, 0.0f, 0.0f)));
 		Pipe.getTexture().bind();
 		Pipe.getMesh().bind();
@@ -131,6 +132,7 @@ public class Level {
 	public void render() {
 		bgTexture.bind();
 		Shader.BG.enable();
+		Shader.BG.setUniform2f("bird", 0.0f, bird.getY());
 		background.bind();
 		for (int i = map; i < map + 3; i++) {
 			Shader.BG.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(i * 10 + xScroll * 0.03f, 0.0f, 0.0f)));

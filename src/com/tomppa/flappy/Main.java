@@ -58,7 +58,7 @@ public class Main implements Runnable {
 		glfwShowWindow(window);
 		GLContext.createFromCurrent();
 		
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glActiveTexture(GL_TEXTURE1);
 		glEnable(GL_BLEND);
