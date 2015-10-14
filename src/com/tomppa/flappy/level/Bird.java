@@ -1,6 +1,7 @@
 package com.tomppa.flappy.level;
 
 import org.lwjgl.glfw.GLFW;
+import static org.lwjgl.glfw.GLFW.*;
 
 import com.tomppa.flappy.graphics.Shader;
 import com.tomppa.flappy.graphics.Texture;
@@ -44,14 +45,16 @@ public class Bird {
 	}
 	
 	public void update() {
-		if (Input.keys[GLFW.GLFW_KEY_UP])
-			position.y += 0.1f;
-		if (Input.keys[GLFW.GLFW_KEY_DOWN])
-			position.y -= 0.1f;
-		if (Input.keys[GLFW.GLFW_KEY_LEFT])
-			position.x -= 0.1f;
-		if (Input.keys[GLFW.GLFW_KEY_RIGHT])
-			position.x += 0.1f;
+		position.y -= delta;
+		if (Input.isKeyDown(GLFW_KEY_SPACE)) {
+			delta = -0.15f;
+		} else {
+			delta += 0.01f;
+		}
+	}
+	
+	private void fall() {
+		delta = -0.15f;
 	}
 	
 	public void render() {

@@ -108,8 +108,6 @@ public class Main implements Runnable {
 	
 	private void update() {
 		glfwPollEvents();
-		if (Input.keys[GLFW_KEY_SPACE])
-			System.out.println("FLAP!");
 		level.update();
 	}
 	
